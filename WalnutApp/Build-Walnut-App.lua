@@ -9,8 +9,8 @@ project "WalnutApp"
 
    includedirs
    {
-      "../vendor/imgui",
-      "../vendor/glfw/include",
+      "../Walnut/Vendor/imgui",
+      "../Walnut/Vendor/glfw/include",
 
       "../Walnut/Source",
       "../Walnut/Platform/GUI",
@@ -24,8 +24,8 @@ project "WalnutApp"
         "Walnut"
     }
 
-   targetdir ("../bin/" .. outputdir .. "/%{prj.name}")
-   objdir ("../bin-int/" .. outputdir .. "/%{prj.name}")
+   targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
+   objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
 
    filter "system:windows"
       systemversion "latest"

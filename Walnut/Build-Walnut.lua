@@ -19,9 +19,9 @@ project "Walnut"
       "Source",
       "Platform/GUI",
 
-      "../vendor/imgui",
-      "../vendor/glfw/include",
-      "../vendor/stb_image",
+      "Vendor/imgui",
+      "Vendor/glfw/include",
+      "Vendor/stb_image",
 
       "%{IncludeDir.VulkanSDK}",
       "%{IncludeDir.glm}",
@@ -36,8 +36,8 @@ project "Walnut"
        "%{Library.Vulkan}",
    }
 
-   targetdir ("../../bin/" .. outputdir .. "/%{prj.name}")
-   objdir ("../../bin-int/" .. outputdir .. "/%{prj.name}")
+   targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
+   objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
 
    filter "system:windows"
       systemversion "latest"
