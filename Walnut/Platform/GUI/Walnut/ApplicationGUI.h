@@ -39,6 +39,15 @@ namespace Walnut {
 		bool CenterWindow = false;
 	};
 
+	struct DockLayout
+	{
+		unsigned int Main;
+		unsigned int Left;
+		unsigned int Right;
+		unsigned int Up;
+		unsigned int Down;
+	};
+
 	class Application
 	{
 	public:
@@ -108,6 +117,8 @@ namespace Walnut {
 		std::mutex m_EventQueueMutex;
 		std::queue<std::function<void()>> m_EventQueue;
 
+		DockLayout m_dockLayout;
+		
 		// Resources
 		// TODO(Yan): move out of application class since this can't be tied
 		//            to application lifetime

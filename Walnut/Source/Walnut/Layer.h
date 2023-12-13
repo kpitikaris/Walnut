@@ -1,5 +1,10 @@
 #pragma once
 
+namespace Walnut
+{
+	struct DockLayout;
+}
+
 namespace Walnut {
 
 	class Layer
@@ -12,6 +17,7 @@ namespace Walnut {
 
 		virtual void OnUpdate(float ts) {}
 		virtual void OnUIRender() {}
+		virtual void OnBuildDockSpace(const DockLayout& layout) { }
 	};
 
 }

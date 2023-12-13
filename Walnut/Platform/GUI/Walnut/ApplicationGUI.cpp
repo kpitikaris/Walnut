@@ -951,12 +951,47 @@ namespace Walnut {
 				}
 
 				// Dockspace
+				static ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
+				
+
+				if (dockspaceFlags & ImGuiDockNodeFlags_PassthruCentralNode)
+					window_flags |= ImGuiWindowFlags_NoBackground;
+				
 				ImGuiIO& io = ImGui::GetIO();
-				ImGuiStyle& style = ImGui::GetStyle();
-				float minWinSizeX = style.WindowMinSize.x;
-				style.WindowMinSize.x = 370.0f;
-				ImGui::DockSpace(ImGui::GetID("MyDockspace"));
-				style.WindowMinSize.x = minWinSizeX;
+				if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+				{
+					m_dockLayout.Main = ImGui::GetID("D3DDockSpace");
+
+					ImGui::DockSpace(m_dockLayout.Main, ImVec2(0.0f, 0.0f), dockspaceFlags);
+
+					if (static auto first_time = true)
+					{
+						first_time = false;
+
+						ImGui::DockBuilderRemoveNode(m_dockLayout.Main); // clear any previous layout
+						ImGui::DockBuilderAddNode(m_dockLayout.Main, dockspaceFlags | ImGuiDockNodeFlags_DockSpace);
+						ImGui::DockBuilderSetNodeSize(m_dockLayout.Main, viewport->Size);
+
+						m_dockLayout.Left = ImGui::DockBuilderSplitNode(m_dockLayout.Main, ImGuiDir_Left, 0.2f, nullptr,
+																		   &m_dockLayout.Main);
+						m_dockLayout.Down = ImGui::DockBuilderSplitNode(m_dockLayout.Main, ImGuiDir_Down, 0.25f, nullptr,
+																		   &m_dockLayout.Main);
+
+						m_dockLayout.Right = ImGui::DockBuilderSplitNode(m_dockLayout.Main, ImGuiDir_Right, 0.2f, nullptr,
+																		   &m_dockLayout.Main);
+
+						m_dockLayout.Up = ImGui::DockBuilderSplitNode(m_dockLayout.Main, ImGuiDir_Up, 0.25f, nullptr,
+																		   &m_dockLayout.Main);
+
+						for(auto& layer : m_LayerStack)
+						{
+							layer->OnBuildDockSpace(m_dockLayout);
+						}
+                        
+
+						ImGui::DockBuilderFinish(m_dockLayout.Main); 
+					}
+				}
 
 				if (!m_Specification.CustomTitlebar)
 					UI_DrawMenubar();

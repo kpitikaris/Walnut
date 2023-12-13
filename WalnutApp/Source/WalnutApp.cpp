@@ -13,8 +13,10 @@ public:
 		ImGui::Button("Button");
 		ImGui::End();
 
-		ImGui::ShowDemoWindow();
-
+		ImGui::Begin("Test");
+		ImGui::Button("Button");
+		ImGui::End();
+		
 		UI_DrawAboutModal();
 	}
 
@@ -46,6 +48,12 @@ public:
 
 			ImGui::EndPopup();
 		}
+	}
+
+	void OnBuildDockSpace(const Walnut::DockLayout& layout) override
+	{
+		ImGui::DockBuilderDockWindow("Hello", layout.Main);
+		ImGui::DockBuilderDockWindow("Test", layout.Up);
 	}
 
 	void ShowAboutModal()
