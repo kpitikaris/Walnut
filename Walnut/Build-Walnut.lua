@@ -3,7 +3,7 @@ project "Walnut"
    language "C++"
    cppdialect "C++20"
    targetdir "bin/%{cfg.buildcfg}"
-   staticruntime "on"
+   staticruntime "off"
 
    files
    {
