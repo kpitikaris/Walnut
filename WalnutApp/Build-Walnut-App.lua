@@ -5,7 +5,7 @@ project "WalnutApp"
    targetdir "bin/%{cfg.buildcfg}"
    staticruntime "off"
 
-   files { "src/**.h", "src/**.cpp" }
+   files { "Source/**.h", "Source/**.cpp" }
 
    includedirs
    {
