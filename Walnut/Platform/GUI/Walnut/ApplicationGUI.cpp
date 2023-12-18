@@ -489,7 +489,7 @@ namespace Walnut {
 		glfwSetWindowUserPointer(m_WindowHandle, this);
 		glfwSetTitlebarHitTestCallback(m_WindowHandle, [](GLFWwindow* window, int x, int y, int* hit)
 		{
-			Application* app = (Application*)glfwGetWindowUserPointer(window);
+			const auto* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
 			*hit = app->IsTitleBarHovered();
 		});
 
