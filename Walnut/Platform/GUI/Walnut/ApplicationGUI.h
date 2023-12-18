@@ -27,6 +27,7 @@ namespace Walnut {
 		uint32_t Height = 900;
 
 		std::filesystem::path IconPath;
+		std::filesystem::path HeaderIconPath;
 
 		bool WindowResizeable = true;
 

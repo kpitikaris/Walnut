@@ -1,8 +1,5 @@
-#include "Walnut/Application.h"
-#include "Walnut/EntryPoint.h"
+#include "Walnut/Walnut.h"
 
-#include "Walnut/Image.h"
-#include "Walnut/UI/UI.h"
 
 class ExampleLayer : public Walnut::Layer
 {
@@ -13,9 +10,7 @@ public:
 		ImGui::Button("Button");
 		ImGui::End();
 
-		ImGui::Begin("Test");
-		ImGui::Button("Button");
-		ImGui::End();
+		ImGui::ShowDemoWindow();
 		
 		UI_DrawAboutModal();
 	}
@@ -50,10 +45,10 @@ public:
 		}
 	}
 
-	void OnBuildDockSpace(const Walnut::DockLayout& layout) override
+	void OnUIBuildDockSpace(const Walnut::DockLayout& layout) override
 	{
 		ImGui::DockBuilderDockWindow("Hello", layout.Main);
-		ImGui::DockBuilderDockWindow("Test", layout.Up);
+		ImGui::DockBuilderDockWindow("Dear ImGui Demo", layout.Main);
 	}
 
 	void ShowAboutModal()
@@ -64,14 +59,15 @@ private:
 	bool m_AboutModalOpen = false;
 };
 
+
 Walnut::Application* Walnut::CreateApplication(int argc, char** argv)
 {
 	Walnut::ApplicationSpecification spec;
 	spec.Name = "Walnut Example";
 	spec.CustomTitlebar = true;
 
-	Walnut::Application* app = new Walnut::Application(spec);
-	std::shared_ptr<ExampleLayer> exampleLayer = std::make_shared<ExampleLayer>();
+	auto* app = new Walnut::Application(spec);
+	auto exampleLayer = std::make_shared<ExampleLayer>();
 	app->PushLayer(exampleLayer);
 	app->SetMenubarCallback([app, exampleLayer]()
 	{

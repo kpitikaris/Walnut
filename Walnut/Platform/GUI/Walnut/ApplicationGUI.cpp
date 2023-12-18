@@ -474,6 +474,7 @@ namespace Walnut {
 		}
 		
 		// Set icon
+
 		GLFWimage icon;
 		int channels;
 		if (!m_Specification.IconPath.empty())
@@ -483,7 +484,8 @@ namespace Walnut {
 			glfwSetWindowIcon(m_WindowHandle, 1, &icon);
 			stbi_image_free(icon.pixels);
 		}
-
+		
+		
 		glfwSetWindowUserPointer(m_WindowHandle, this);
 		glfwSetTitlebarHitTestCallback(m_WindowHandle, [](GLFWwindow* window, int x, int y, int* hit)
 		{
@@ -599,10 +601,19 @@ namespace Walnut {
 
 		// Load images
 		{
-			uint32_t w, h;
-			void* data = Image::Decode(g_WalnutIcon, sizeof(g_WalnutIcon), w, h);
-			m_AppHeaderIcon = std::make_shared<Walnut::Image>(w, h, ImageFormat::RGBA, data);
-			free(data);
+			if(!m_Specification.HeaderIconPath.empty())
+			{
+				std::string headerIconPathStr = m_Specification.HeaderIconPath.string();
+				m_AppHeaderIcon = std::make_shared<Walnut::Image>(headerIconPathStr);
+			}
+			else
+			{
+				uint32_t w, h;
+				void* data = Image::Decode(g_WalnutIcon, sizeof(g_WalnutIcon), w, h);
+				m_AppHeaderIcon = std::make_shared<Walnut::Image>(w, h, ImageFormat::RGBA, data);
+				free(data);
+			}
+			
 		}
 		{
 			uint32_t w, h;
@@ -985,7 +996,7 @@ namespace Walnut {
 
 						for(auto& layer : m_LayerStack)
 						{
-							layer->OnBuildDockSpace(m_dockLayout);
+							layer->OnUIBuildDockSpace(m_dockLayout);
 						}
                         
 
