@@ -1,5 +1,7 @@
 #include "Walnut/Walnut.h"
 
+#include <glm/glm.hpp>
+
 
 class ExampleLayer : public Walnut::Layer
 {
@@ -13,6 +15,12 @@ public:
 		ImGui::ShowDemoWindow();
 		
 		UI_DrawAboutModal();
+	}
+	
+
+	void OnAttach() override
+	{
+		glm::vec2 vec2 = { 1.0f, 2.0f };
 	}
 
 	void UI_DrawAboutModal()
